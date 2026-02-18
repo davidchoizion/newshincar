@@ -1,5 +1,28 @@
 const lottoNumbersDiv = document.getElementById('lotto-numbers');
 const generateBtn = document.getElementById('generate-btn');
+const themeToggleBtn = document.getElementById('theme-toggle');
+
+// Theme handling logic
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-theme');
+        themeToggleBtn.textContent = '☀️ Light Mode';
+    } else {
+        document.body.classList.remove('dark-theme');
+        themeToggleBtn.textContent = '🌙 Dark Mode';
+    }
+}
+
+function toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    themeToggleBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+}
+
+themeToggleBtn.addEventListener('click', toggleTheme);
+initTheme();
 
 function generateNumbers() {
     const numbers = new Set();
