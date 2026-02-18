@@ -40,8 +40,25 @@ body {
 .lotto-numbers {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     margin: 20px 0;
+}
+
+.plus-sign {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.number.bonus {
+    border-color: #f39c12;
+    color: #f39c12;
+}
+
+.dark-theme .number.bonus {
+    border-color: #f1c40f;
+    color: #f1c40f;
 }
 
 .number {

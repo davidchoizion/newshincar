@@ -26,20 +26,36 @@ initTheme();
 
 function generateNumbers() {
     const numbers = new Set();
-    while (numbers.size < 6) {
+    while (numbers.size < 7) {
         const randomNumber = Math.floor(Math.random() * 45) + 1;
         numbers.add(randomNumber);
     }
 
-    const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
+    const numbersArray = Array.from(numbers);
+    const mainNumbers = numbersArray.slice(0, 6).sort((a, b) => a - b);
+    const bonusNumber = numbersArray[6];
 
     lottoNumbersDiv.innerHTML = ''; // Clear previous numbers
-    for (const number of sortedNumbers) {
+    
+    // Add main numbers
+    for (const number of mainNumbers) {
         const numberDiv = document.createElement('div');
         numberDiv.classList.add('number');
         numberDiv.textContent = number;
         lottoNumbersDiv.appendChild(numberDiv);
     }
+
+    // Add plus sign
+    const plusSpan = document.createElement('span');
+    plusSpan.classList.add('plus-sign');
+    plusSpan.textContent = '+';
+    lottoNumbersDiv.appendChild(plusSpan);
+
+    // Add bonus number
+    const bonusDiv = document.createElement('div');
+    bonusDiv.classList.add('number', 'bonus');
+    bonusDiv.textContent = bonusNumber;
+    lottoNumbersDiv.appendChild(bonusDiv);
 }
 
 generateBtn.addEventListener('click', generateNumbers);
