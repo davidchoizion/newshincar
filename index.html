@@ -1,19 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>제휴 문의</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="theme-toggle">🌙 Dark Mode</button>
-    <div class="container">
-        <h1>Lotto Number Generator</h1>
-        <div class="lotto-numbers" id="lotto-numbers">
-        </div>
-        <button id="generate-btn">Generate Numbers</button>
-    </div>
+    <main class="page">
+        <section class="hero">
+            <p class="eyebrow">Partnership</p>
+            <h1>제휴 문의</h1>
+            <p class="subtitle">
+                협업 제안, 공동 마케팅, API 연동 등 무엇이든 편하게 남겨주세요.
+                영업일 기준 2~3일 내에 회신드립니다.
+            </p>
+        </section>
+
+        <section class="card">
+            <form id="partner-form" action="https://formspree.io/f/xwvnryzq" method="POST" novalidate>
+                <div class="grid">
+                    <label class="field">
+                        <span>이름</span>
+                        <input type="text" name="name" autocomplete="name" required placeholder="홍길동">
+                    </label>
+                    <label class="field">
+                        <span>이메일</span>
+                        <input type="email" name="email" autocomplete="email" required placeholder="you@example.com">
+                    </label>
+                    <label class="field">
+                        <span>회사/조직</span>
+                        <input type="text" name="company" autocomplete="organization" placeholder="회사명">
+                    </label>
+                    <label class="field">
+                        <span>연락처</span>
+                        <input type="tel" name="phone" autocomplete="tel" placeholder="010-1234-5678">
+                    </label>
+                </div>
+
+                <label class="field">
+                    <span>문의 유형</span>
+                    <select name="topic" required>
+                        <option value="" selected disabled>선택해주세요</option>
+                        <option value="partnership">제휴/협업</option>
+                        <option value="marketing">공동 마케팅</option>
+                        <option value="api">API 연동</option>
+                        <option value="media">미디어/PR</option>
+                        <option value="other">기타</option>
+                    </select>
+                </label>
+
+                <label class="field">
+                    <span>문의 내용</span>
+                    <textarea name="message" rows="6" required placeholder="제안 배경, 기대 효과, 일정 등을 공유해 주세요."></textarea>
+                </label>
+
+                <label class="checkbox">
+                    <input type="checkbox" name="privacy" required>
+                    <span>개인정보 수집 및 이용에 동의합니다.</span>
+                </label>
+
+                <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+                <input type="hidden" name="_subject" value="제휴 문의">
+
+                <button type="submit" class="submit">문의 보내기</button>
+                <p class="form-note" id="form-note" aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+
     <script src="main.js"></script>
 </body>
 </html>

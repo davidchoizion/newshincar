@@ -1,64 +1,35 @@
-const lottoNumbersDiv = document.getElementById('lotto-numbers');
-const generateBtn = document.getElementById('generate-btn');
-const themeToggleBtn = document.getElementById('theme-toggle');
+const form = document.getElementById('partner-form');
+const note = document.getElementById('form-note');
+const submitBtn = form.querySelector('button[type="submit"]');
 
-// Theme handling logic
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeToggleBtn.textContent = '☀️ Light Mode';
-    } else {
-        document.body.classList.remove('dark-theme');
-        themeToggleBtn.textContent = '🌙 Dark Mode';
-    }
-}
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
 
-function toggleTheme() {
-    document.body.classList.toggle('dark-theme');
-    const isDark = document.body.classList.contains('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    themeToggleBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
-}
-
-themeToggleBtn.addEventListener('click', toggleTheme);
-initTheme();
-
-function generateNumbers() {
-    const numbers = new Set();
-    while (numbers.size < 7) {
-        const randomNumber = Math.floor(Math.random() * 45) + 1;
-        numbers.add(randomNumber);
+    if (!form.reportValidity()) {
+        return;
     }
 
-    const numbersArray = Array.from(numbers);
-    const mainNumbers = numbersArray.slice(0, 6).sort((a, b) => a - b);
-    const bonusNumber = numbersArray[6];
+    submitBtn.disabled = true;
+    note.textContent = '전송 중입니다. 잠시만 기다려 주세요.';
 
-    lottoNumbersDiv.innerHTML = ''; // Clear previous numbers
-    
-    // Add main numbers
-    for (const number of mainNumbers) {
-        const numberDiv = document.createElement('div');
-        numberDiv.classList.add('number');
-        numberDiv.textContent = number;
-        lottoNumbersDiv.appendChild(numberDiv);
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            form.reset();
+            note.textContent = '문의가 정상적으로 접수되었습니다. 곧 연락드리겠습니다.';
+        } else {
+            note.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해 주세요.';
+        }
+    } catch (error) {
+        note.textContent = '네트워크 오류가 발생했습니다. 연결 상태를 확인해 주세요.';
+    } finally {
+        submitBtn.disabled = false;
     }
-
-    // Add plus sign
-    const plusSpan = document.createElement('span');
-    plusSpan.classList.add('plus-sign');
-    plusSpan.textContent = '+';
-    lottoNumbersDiv.appendChild(plusSpan);
-
-    // Add bonus number
-    const bonusDiv = document.createElement('div');
-    bonusDiv.classList.add('number', 'bonus');
-    bonusDiv.textContent = bonusNumber;
-    lottoNumbersDiv.appendChild(bonusDiv);
-}
-
-generateBtn.addEventListener('click', generateNumbers);
-
-// Generate numbers on initial load
-generateNumbers();
+});
